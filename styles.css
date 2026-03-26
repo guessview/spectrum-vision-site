@@ -34,6 +34,7 @@ a { text-decoration: none; color: inherit; }
   background: var(--navy);
   display: flex; align-items: center; justify-content: center;
   flex-direction: column; gap: 28px;
+  will-change: opacity, transform, filter, clip-path;
 }
 .pl-word {
   font-family: var(--ff-d);
@@ -46,6 +47,17 @@ a { text-decoration: none; color: inherit; }
   animation: plUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
 }
 @keyframes plUp { to { transform: translateY(0); } }
+.pl-logo {
+  overflow: hidden;
+}
+.pl-logo img {
+  height: 64px;
+  width: auto;
+  display: block;
+  transform: translateY(110%);
+  animation: plUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
+  animation-delay: 0.15s;
+}
 .pl-bar {
   width: 0; height: 1px;
   background: linear-gradient(90deg, transparent, var(--lime), transparent);
@@ -61,7 +73,14 @@ a { text-decoration: none; color: inherit; }
 #pl.gone {
   animation: plGone 0.9s cubic-bezier(0.7,0,0.3,1) both;
 }
-@keyframes plGone { to { clip-path: inset(0 0 100% 0); } }
+@keyframes plGone {
+  to {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+    transform: translateY(-10px);
+    filter: blur(10px);
+  }
+}
 
 /* ============================================================
    CURSOR
