@@ -35,10 +35,15 @@ document.addEventListener('mousemove', (e) => {
   cR.style.cssText = `left:${rx}px;top:${ry}px`;
   requestAnimationFrame(ra);
 }());
-document.querySelectorAll('a,button,.srv,.wk,.st,.tp,.cl-nm').forEach((el) => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('ch'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
-});
+(() => {
+  const sel = 'a,button,.srv,.wk,.st,.tp,.cl-nm';
+  document.addEventListener('mouseover', (e) => {
+    if (e.target && e.target.closest && e.target.closest(sel)) document.body.classList.add('ch');
+  });
+  document.addEventListener('mouseout', (e) => {
+    if (e.target && e.target.closest && e.target.closest(sel)) document.body.classList.remove('ch');
+  });
+})();
 
 /* NAV SCROLL */
 window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('sc', scrollY > 60));
@@ -50,7 +55,46 @@ const ro = new IntersectionObserver((es) => es.forEach((e) => {
     ro.unobserve(e.target);
   }
 }), { threshold: 0.08 });
-document.querySelectorAll('.rv').forEach((el) => ro.observe(el));
+function observeReveals(root = document) {
+  root.querySelectorAll('.rv').forEach((el) => ro.observe(el));
+}
+observeReveals();
+
+/* PROJECTS (work grid) */
+async function loadProjects() {
+  const grid = document.getElementById('workGrid');
+  if (!grid) return;
+  const url = grid.getAttribute('data-projects-json') || 'projects/projects.json';
+
+  try {
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) return;
+    const projects = await res.json();
+    if (!Array.isArray(projects)) return;
+
+    grid.innerHTML = projects.map((p, i) => {
+      const delay = i % 4;
+      const dClass = delay === 1 ? ' d1' : delay === 2 ? ' d2' : delay === 3 ? ' d3' : '';
+      const title = String(p?.title || '').toUpperCase();
+      const cat = String(p?.cardCategory || '');
+      const href = String(p?.href || '#');
+      const cover = String(p?.cover || '');
+      const alt = `${p?.title || 'Project'} cover`;
+      return `
+        <a href="${href}" class="wk rv${dClass}">
+          <img class="wk-cover" src="${cover}" alt="${alt}">
+          <div class="wk-inf"><div class="wk-cat">${cat}</div><div class="wk-nm">${title}</div></div>
+        </a>
+      `.trim();
+    }).join('');
+
+    observeReveals(grid);
+    if (window.__layoutWorkGrid) window.__layoutWorkGrid();
+  } catch {
+    // If JSON is missing/invalid, keep grid empty.
+  }
+}
+loadProjects();
 
 /* COUNT-UP */
 const co = new IntersectionObserver((es) => es.forEach((e) => {
@@ -272,7 +316,7 @@ window.addEventListener('scroll', () => {
     }
   }
 
-  items.forEach((item, idx) => {
+  items.forEach((item) => {
     const panel = item.querySelector('.srv-more');
     if (panel) {
       panel.style.height = '0px';
@@ -287,16 +331,6 @@ window.addEventListener('scroll', () => {
         toggleItem(item);
       }
     });
-    if (idx === 0) {
-      item.classList.add('op');
-      item.setAttribute('aria-expanded', 'true');
-      if (panel) {
-        panel.style.height = 'auto';
-        panel.style.opacity = '1';
-        panel.style.transform = 'translateY(0)';
-        panel.style.marginTop = '8px';
-      }
-    }
   });
 })();
 
@@ -344,11 +378,24 @@ window.addEventListener('scroll', () => {
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(layoutMasonry);
   }
+  window.__layoutWorkGrid = requestLayout;
 
-  const imgs = grid.querySelectorAll('.wk-cover');
-  imgs.forEach((img) => {
-    if (!img.complete) img.addEventListener('load', requestLayout);
+  function bindImageListeners(root = grid) {
+    const imgs = root.querySelectorAll('.wk-cover');
+    imgs.forEach((img) => {
+      if (!img.__masonryBound) {
+        img.__masonryBound = true;
+        if (!img.complete) img.addEventListener('load', requestLayout);
+      }
+    });
+  }
+  bindImageListeners();
+
+  const mo = new MutationObserver(() => {
+    bindImageListeners();
+    requestLayout();
   });
+  mo.observe(grid, { childList: true, subtree: true });
 
   window.addEventListener('resize', requestLayout);
   window.addEventListener('load', requestLayout);

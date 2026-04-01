@@ -1,0 +1,17 @@
+{
+  "title": "Garden Lofts",
+  "cardCategory": "Real Estate — Kutaisi",
+  "meta": "Real Estate — Kutaisi · Staging · 2024",
+  "year": 2024,
+  "cover": "cover.jpg",
+  "renders": [
+    { "src": "renders/01.jpg", "wide": true },
+    { "src": "renders/02.jpg", "wide": true },
+    { "src": "renders/03.jpg" },
+    { "src": "renders/04.jpg" },
+    { "src": "renders/05.jpg" },
+    { "src": "renders/06.jpg", "wide": true },
+    { "src": "renders/07.jpg", "wide": true }
+  ]
+}
+

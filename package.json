@@ -1,0 +1,9 @@
+{
+  "name": "spectrum-vision-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node ./tools/generate-projects.mjs"
+  }
+}
+
