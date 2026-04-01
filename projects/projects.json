@@ -1,5 +1,21 @@
 [
   {
+    "slug": "DUBAI",
+    "title": "Dubai",
+    "cardCategory": "Architecture — Dubai",
+    "meta": "Architecture — Dubai · Exterior · 2025",
+    "href": "projects/DUBAI/",
+    "cover": "projects/DUBAI/cover.jpg"
+  },
+  {
+    "slug": "NEXT",
+    "title": "Next",
+    "cardCategory": "Residential — Development",
+    "meta": "Residential — Development · Visualization · 2025",
+    "href": "projects/NEXT/",
+    "cover": "projects/NEXT/cover.jpg"
+  },
+  {
     "slug": "coastal-retreat",
     "title": "Coastal Retreat",
     "cardCategory": "Luxury Villa — Batumi",

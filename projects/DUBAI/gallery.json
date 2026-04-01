@@ -1,0 +1,17 @@
+{
+  "title": "Dubai",
+  "renders": [
+    {
+      "src": "renders/1.jpg"
+    },
+    {
+      "src": "renders/2.jpg"
+    },
+    {
+      "src": "renders/3.jpg"
+    },
+    {
+      "src": "renders/4.jpg"
+    }
+  ]
+}

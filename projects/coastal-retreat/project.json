@@ -4,14 +4,5 @@
   "meta": "Luxury Villa — Batumi · Interior · 2025",
   "year": 2025,
   "cover": "cover.jpg",
-  "renders": [
-    { "src": "renders/01.jpg", "wide": true },
-    { "src": "renders/02.jpg", "wide": true },
-    { "src": "renders/03.jpg" },
-    { "src": "renders/04.jpg" },
-    { "src": "renders/05.jpg" },
-    { "src": "renders/06.jpg", "wide": true },
-    { "src": "renders/07.jpg", "wide": true }
-  ]
+  "renders": "auto"
 }
-

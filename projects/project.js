@@ -10,10 +10,10 @@
   revealEls.forEach((el) => ro.observe(el));
 
   async function maybeBuildGalleryFromJson() {
-    const grid = document.querySelector('.grid[data-project-json]');
+    const grid = document.querySelector('.grid[data-gallery-json], .grid[data-project-json]');
     if (!grid) return;
 
-    const url = grid.getAttribute('data-project-json');
+    const url = grid.getAttribute('data-gallery-json') || grid.getAttribute('data-project-json');
     if (!url) return;
 
     try {

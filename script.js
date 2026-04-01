@@ -1,11 +1,23 @@
-/* PRELOADER */
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const pl = document.getElementById('pl');
-    pl.classList.add('gone');
-    setTimeout(() => pl.remove(), 950);
-  }, 2000);
-});
+/* PRELOADER — wait for CSS intro to finish, then exit (no idle gap). Intro: bar ends at 0.7s + 0.9s = 1.6s */
+const PRELOADER_INTRO_MS = 1680;
+const PRELOADER_EXIT_MS = 900; /* match styles.css #pl.gone 0.9s */
+
+function hidePreloader() {
+  const pl = document.getElementById('pl');
+  if (!pl) return;
+  pl.classList.add('gone');
+  setTimeout(() => pl.remove(), PRELOADER_EXIT_MS);
+}
+
+function schedulePreloaderHide() {
+  setTimeout(hidePreloader, PRELOADER_INTRO_MS);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', schedulePreloaderHide, { once: true });
+} else {
+  schedulePreloaderHide();
+}
 
 /* TICKER */
 const tWords = ['Architecture', 'Interior Design', 'Product Render', 'Animation', 'Branding', 'Virtual Staging'];
