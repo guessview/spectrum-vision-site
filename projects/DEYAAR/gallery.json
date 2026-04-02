@@ -1,0 +1,47 @@
+{
+  "title": "DEYAAR",
+  "renders": [
+    {
+      "src": "renders/1_2.webp"
+    },
+    {
+      "src": "renders/1-Night.webp"
+    },
+    {
+      "src": "renders/2_2.webp"
+    },
+    {
+      "src": "renders/2-Night.webp"
+    },
+    {
+      "src": "renders/3_1.webp"
+    },
+    {
+      "src": "renders/3-night.webp"
+    },
+    {
+      "src": "renders/4_2.webp"
+    },
+    {
+      "src": "renders/4-night-v2.webp"
+    },
+    {
+      "src": "renders/4-night.webp"
+    },
+    {
+      "src": "renders/5.webp"
+    },
+    {
+      "src": "renders/6.webp"
+    },
+    {
+      "src": "renders/7.webp"
+    },
+    {
+      "src": "renders/8_1.webp"
+    },
+    {
+      "src": "renders/8-night.webp"
+    }
+  ]
+}
