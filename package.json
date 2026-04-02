@@ -4,6 +4,9 @@
   "type": "module",
   "scripts": {
     "generate": "node ./tools/generate-projects.mjs"
+  },
+  "dependencies": {
+    "resend": "^6.0.1"
   }
 }
 

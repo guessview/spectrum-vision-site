@@ -108,6 +108,84 @@ async function loadProjects() {
 }
 loadProjects();
 
+/* BRIEF MODAL */
+(() => {
+  const openBtn = document.getElementById('briefOpen');
+  const modal = document.getElementById('briefModal');
+  const form = document.getElementById('briefForm');
+  const msg = document.getElementById('bmMsg');
+  const submitText = document.getElementById('bmSubmitText');
+
+  if (!openBtn || !modal || !form) return;
+
+  function open() {
+    modal.classList.add('on');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    msg.textContent = '';
+    msg.className = 'bm-msg';
+    const first = form.querySelector('input[name="email"]');
+    if (first) first.focus({ preventScroll: true });
+  }
+
+  function close() {
+    modal.classList.remove('on');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', open);
+  modal.addEventListener('click', (e) => {
+    const t = e.target;
+    if (t && t.hasAttribute && t.hasAttribute('data-bm-close')) close();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('on')) return;
+    if (e.key === 'Escape') close();
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = '';
+    msg.className = 'bm-msg';
+
+    const fd = new FormData(form);
+    const payload = Object.fromEntries(fd.entries());
+
+    if (!String(payload.email || '').trim() || !String(payload.message || '').trim()) {
+      msg.textContent = 'Please fill required fields.';
+      msg.classList.add('err');
+      return;
+    }
+
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) btn.disabled = true;
+    if (submitText) submitText.textContent = 'Sending…';
+
+    try {
+      const res = await fetch('/api/brief', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Failed');
+
+      msg.textContent = 'Sent. We’ll reply soon.';
+      msg.classList.add('ok');
+      form.reset();
+      setTimeout(close, 900);
+    } catch {
+      msg.textContent = 'Could not send right now. Please email us at hello@spectrumvision.ge.';
+      msg.classList.add('err');
+    } finally {
+      if (btn) btn.disabled = false;
+      if (submitText) submitText.textContent = 'Send';
+    }
+  });
+})();
+
 /* COUNT-UP */
 const co = new IntersectionObserver((es) => es.forEach((e) => {
   if (!e.isIntersecting) return;
