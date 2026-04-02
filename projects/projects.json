@@ -1,5 +1,29 @@
 [
   {
+    "slug": "DESERT - SAUDI ARABIA",
+    "title": "DESERT - SAUDI ARABIA",
+    "cardCategory": "Project",
+    "meta": "DESERT - SAUDI ARABIA · Visualization · 2026",
+    "href": "projects/DESERT%20-%20SAUDI%20ARABIA/",
+    "cover": "projects/DESERT%20-%20SAUDI%20ARABIA/cover.webp"
+  },
+  {
+    "slug": "INTERIOR - DIGHOMI",
+    "title": "INTERIOR - DIGHOMI",
+    "cardCategory": "Project",
+    "meta": "INTERIOR - DIGHOMI · Visualization · 2026",
+    "href": "projects/INTERIOR%20-%20DIGHOMI/",
+    "cover": "projects/INTERIOR%20-%20DIGHOMI/cover.webp"
+  },
+  {
+    "slug": "NEXT - ORTATCHALA",
+    "title": "NEXT - ORTATCHALA",
+    "cardCategory": "Project",
+    "meta": "NEXT - ORTATCHALA · Visualization · 2026",
+    "href": "projects/NEXT%20-%20ORTATCHALA/",
+    "cover": "projects/NEXT%20-%20ORTATCHALA/cover.webp"
+  },
+  {
     "slug": "NEXT BATUMI",
     "title": "NEXT BATUMI",
     "cardCategory": "Project",
@@ -14,6 +38,22 @@
     "meta": "NEXT ORTACHALA · Visualization · 2026",
     "href": "projects/NEXT%20ORTACHALA/",
     "cover": "projects/NEXT%20ORTACHALA/cover.webp"
+  },
+  {
+    "slug": "NOT A HOTEL - 2026",
+    "title": "NOT A HOTEL - 2026",
+    "cardCategory": "Project",
+    "meta": "NOT A HOTEL - 2026 · Visualization · 2026",
+    "href": "projects/NOT%20A%20HOTEL%20-%202026/",
+    "cover": "projects/NOT%20A%20HOTEL%20-%202026/cover.webp"
+  },
+  {
+    "slug": "PRIVATE HOUSE - AUSTRALIA",
+    "title": "PRIVATE HOUSE - AUSTRALIA",
+    "cardCategory": "Project",
+    "meta": "PRIVATE HOUSE - AUSTRALIA · Visualization · 2026",
+    "href": "projects/PRIVATE%20HOUSE%20-%20AUSTRALIA/",
+    "cover": "projects/PRIVATE%20HOUSE%20-%20AUSTRALIA/cover.webp"
   },
   {
     "slug": "PRIVATE HOUSE - DIGHOMI",
