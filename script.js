@@ -121,6 +121,7 @@ loadProjects();
   function open() {
     modal.classList.add('on');
     modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('bm-open');
     document.body.style.overflow = 'hidden';
     msg.textContent = '';
     msg.className = 'bm-msg';
@@ -131,6 +132,7 @@ loadProjects();
   function close() {
     modal.classList.remove('on');
     modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('bm-open');
     document.body.style.overflow = '';
   }
 

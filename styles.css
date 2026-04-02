@@ -29,8 +29,13 @@ a { text-decoration: none; color: inherit; }
 /* ============================================================
    BRIEF MODAL
 ============================================================ */
+body.bm-open { cursor: auto; }
+body.bm-open .c-d,
+body.bm-open .c-r { display: none; }
+
 .bm { position: fixed; inset: 0; z-index: 9500; display: none; }
 .bm.on { display: block; }
+.bm, .bm * { cursor: auto; }
 .bm-backdrop {
   position: absolute; inset: 0;
   background: rgba(4,4,12,.72);
