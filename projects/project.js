@@ -28,9 +28,7 @@
         const wide = r?.wide ? ' wide' : '';
         const n = String(i + 1).padStart(2, '0');
         const alt = `${data.title || 'Project'} render ${n}`;
-        const loading = i < 2 ? 'eager' : 'lazy';
-        const fetchpriority = i < 2 ? 'high' : 'auto';
-        return `<img class="render ph${wide}" src="${src}" alt="${alt}" loading="${loading}" decoding="async" fetchpriority="${fetchpriority}">`;
+        return `<img class="render ph${wide}" src="${src}" alt="${alt}">`;
       }).join('');
     } catch {
       // If JSON is missing/invalid, keep whatever HTML is already there.

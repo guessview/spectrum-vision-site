@@ -92,11 +92,9 @@ async function loadProjects() {
       const href = String(p?.href || '#');
       const cover = String(p?.cover || '');
       const alt = `${p?.title || 'Project'} cover`;
-      const loading = i < 2 ? 'eager' : 'lazy';
-      const fetchpriority = i < 2 ? 'high' : 'auto';
       return `
         <a href="${href}" class="wk rv${dClass}">
-          <img class="wk-cover" src="${cover}" alt="${alt}" loading="${loading}" decoding="async" fetchpriority="${fetchpriority}">
+          <img class="wk-cover" src="${cover}" alt="${alt}">
           <div class="wk-inf"><div class="wk-cat">${cat}</div><div class="wk-nm">${title}</div></div>
         </a>
       `.trim();
