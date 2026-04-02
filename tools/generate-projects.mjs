@@ -42,33 +42,28 @@ async function readJson(p) {
   }
 }
 
-function normalizeProject(project, slug) {
-  if (!project || typeof project !== 'object') throw new Error(`project.json in "${slug}" must be an object`);
-  const title = String(project.title || '').trim();
-  if (!title) throw new Error(`Missing "title" in projects/${slug}/project.json`);
+function normalizeProject(project, slug, coverFilename, yearDefault) {
+  const raw = project && typeof project === 'object' ? project : {};
+  const title = String(raw.title || slug).trim() || slug;
+  const year = Number.isFinite(raw.year) ? raw.year : yearDefault;
+  const cardCategory = String(raw.cardCategory || 'Project').trim() || 'Project';
+  const meta = String(raw.meta || `${title} · Visualization · ${year}`).trim();
 
-  const meta = String(project.meta || '').trim();
-  if (!meta) throw new Error(`Missing "meta" in projects/${slug}/project.json`);
+  const order = Number.isFinite(raw.order) ? raw.order : null;
+  const pageTitle = String(raw.pageTitle || title).trim() || title;
 
-  const cardCategory = String(project.cardCategory || '').trim();
-  if (!cardCategory) throw new Error(`Missing "cardCategory" in projects/${slug}/project.json`);
-
-  const cover = String(project.cover || 'cover.jpg').trim();
-  const href = `projects/${slug}/`;
-
-  const order = Number.isFinite(project.order) ? project.order : null;
-  const year = Number.isFinite(project.year) ? project.year : null;
-
+  const coverName = String(coverFilename || raw.cover || 'cover.webp').trim() || 'cover.webp';
+  const hrefSlug = encodeURIComponent(slug);
   return {
     slug,
     title,
-    pageTitle: String(project.pageTitle || title).trim() || title,
+    pageTitle,
     cardCategory,
     meta,
     year,
     order,
-    href,
-    cover: `projects/${slug}/${cover.replaceAll('\\', '/')}`
+    href: `projects/${hrefSlug}/`,
+    cover: `projects/${hrefSlug}/${coverName.replaceAll('\\', '/')}`
   };
 }
 
@@ -100,10 +95,10 @@ async function discoverRenders(slug) {
 }
 
 async function resolveRenders(raw, slug) {
-  const r = raw.renders;
+  const r = raw?.renders ?? 'auto';
   if (r === 'auto') {
     const list = await discoverRenders(slug);
-    const wideFiles = new Set((Array.isArray(raw.wideFilenames) ? raw.wideFilenames : []).map((x) => String(x)));
+    const wideFiles = new Set((Array.isArray(raw?.wideFilenames) ? raw?.wideFilenames : []).map((x) => String(x)));
     return list.map((item) => {
       const base = path.basename(item.src);
       return wideFiles.has(base) ? { ...item, wide: true } : item;
@@ -115,6 +110,31 @@ async function resolveRenders(raw, slug) {
   throw new Error(
     `projects/${slug}/project.json: "renders" must be an array or the string "auto" (scan renders/ folder on generate)`
   );
+}
+
+async function hasWebpRenders(slug) {
+  const dir = path.join(PROJECTS_DIR, slug, 'renders');
+  if (!(await exists(dir))) return false;
+  const names = await fs.readdir(dir);
+  return names.some((n) => n && path.extname(n).toLowerCase() === '.webp');
+}
+
+async function findCoverFilename(raw, slug) {
+  const projectDir = path.join(PROJECTS_DIR, slug);
+  if (raw?.cover) {
+    const candidate = String(raw.cover).trim();
+    if (!candidate) return null;
+    const full = path.join(projectDir, candidate);
+    if (await exists(full)) return candidate;
+  }
+
+  // Prefer webp covers to keep the site light.
+  const candidates = ['cover.webp', 'cover.jpg', 'cover.jpeg', 'cover.png', 'cover.gif'];
+  for (const c of candidates) {
+    const full = path.join(projectDir, c);
+    if (await exists(full)) return c;
+  }
+  return null;
 }
 
 async function loadTemplate() {
@@ -134,6 +154,7 @@ function applyTemplate(tpl, project) {
 
 async function main() {
   const template = await loadTemplate();
+  const yearDefault = new Date().getFullYear();
 
   const entries = await fs.readdir(PROJECTS_DIR, { withFileTypes: true });
   const slugs = entries
@@ -145,15 +166,18 @@ async function main() {
 
   for (const slug of slugs) {
     const jsonPath = path.join(PROJECTS_DIR, slug, 'project.json');
-    if (!(await exists(jsonPath))) continue;
-    const raw = await readJson(jsonPath);
-    const project = normalizeProject(raw, slug);
-    projects.push(project);
+    const raw = (await exists(jsonPath)) ? await readJson(jsonPath) : null;
 
+    // Keep only "new" projects (user uploads) that have .webp renders.
+    // Old projects with only jpg/png will be skipped.
+    if (!(await hasWebpRenders(slug))) continue;
+
+    const coverFilename = await findCoverFilename(raw, slug);
+    if (!coverFilename) continue;
+
+    const project = normalizeProject(raw, slug, coverFilename, yearDefault);
     const resolvedRenders = await resolveRenders(raw, slug);
-    if (raw.renders === 'auto' && resolvedRenders.length === 0) {
-      process.stdout.write(`Note: ${slug}: renders "auto" but renders/ has no image files (or folder missing).\n`);
-    }
+    if (!resolvedRenders.length) continue;
 
     const galleryPath = path.join(PROJECTS_DIR, slug, 'gallery.json');
     await fs.writeFile(
@@ -165,6 +189,8 @@ async function main() {
     const outHtml = applyTemplate(template, project);
     const outPath = path.join(PROJECTS_DIR, slug, 'index.html');
     await fs.writeFile(outPath, outHtml, 'utf8');
+
+    projects.push(project);
   }
 
   projects.sort((a, b) => {

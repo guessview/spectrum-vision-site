@@ -1,58 +1,50 @@
 [
   {
-    "slug": "DUBAI",
-    "title": "Dubai",
-    "cardCategory": "Architecture — Dubai",
-    "meta": "Architecture — Dubai · Exterior · 2025",
-    "href": "projects/DUBAI/",
-    "cover": "projects/DUBAI/cover.jpg"
+    "slug": "NEXT BATUMI",
+    "title": "NEXT BATUMI",
+    "cardCategory": "Project",
+    "meta": "NEXT BATUMI · Visualization · 2026",
+    "href": "projects/NEXT%20BATUMI/",
+    "cover": "projects/NEXT%20BATUMI/cover.webp"
   },
   {
-    "slug": "NEXT",
-    "title": "Next",
-    "cardCategory": "Residential — Development",
-    "meta": "Residential — Development · Visualization · 2025",
-    "href": "projects/NEXT/",
-    "cover": "projects/NEXT/cover.jpg"
+    "slug": "NEXT ORTACHALA",
+    "title": "NEXT ORTACHALA",
+    "cardCategory": "Project",
+    "meta": "NEXT ORTACHALA · Visualization · 2026",
+    "href": "projects/NEXT%20ORTACHALA/",
+    "cover": "projects/NEXT%20ORTACHALA/cover.webp"
   },
   {
-    "slug": "coastal-retreat",
-    "title": "Coastal Retreat",
-    "cardCategory": "Luxury Villa — Batumi",
-    "meta": "Luxury Villa — Batumi · Interior · 2025",
-    "href": "projects/coastal-retreat/",
-    "cover": "projects/coastal-retreat/cover.jpg"
+    "slug": "PRIVATE HOUSE - DIGHOMI",
+    "title": "PRIVATE HOUSE - DIGHOMI",
+    "cardCategory": "Project",
+    "meta": "PRIVATE HOUSE - DIGHOMI · Visualization · 2026",
+    "href": "projects/PRIVATE%20HOUSE%20-%20DIGHOMI/",
+    "cover": "projects/PRIVATE%20HOUSE%20-%20DIGHOMI/cover.webp"
   },
   {
-    "slug": "skyline-tower-phase-ii",
-    "title": "Skyline Tower Phase II",
-    "cardCategory": "Residential Complex — Tbilisi",
-    "meta": "Residential Complex — Tbilisi · Architecture · 2025",
-    "href": "projects/skyline-tower-phase-ii/",
-    "cover": "projects/skyline-tower-phase-ii/cover.jpg"
+    "slug": "PRIVATE HOUSE - GEORGIA",
+    "title": "PRIVATE HOUSE - GEORGIA",
+    "cardCategory": "Project",
+    "meta": "PRIVATE HOUSE - GEORGIA · Visualization · 2026",
+    "href": "projects/PRIVATE%20HOUSE%20-%20GEORGIA/",
+    "cover": "projects/PRIVATE%20HOUSE%20-%20GEORGIA/cover.webp"
   },
   {
-    "slug": "garden-lofts",
-    "title": "Garden Lofts",
-    "cardCategory": "Real Estate — Kutaisi",
-    "meta": "Real Estate — Kutaisi · Staging · 2024",
-    "href": "projects/garden-lofts/",
-    "cover": "projects/garden-lofts/cover.jpg"
+    "slug": "PRIVATE HOUSE - SAGURAMO",
+    "title": "PRIVATE HOUSE - SAGURAMO",
+    "cardCategory": "Project",
+    "meta": "PRIVATE HOUSE - SAGURAMO · Visualization · 2026",
+    "href": "projects/PRIVATE%20HOUSE%20-%20SAGURAMO/",
+    "cover": "projects/PRIVATE%20HOUSE%20-%20SAGURAMO/cover.webp"
   },
   {
-    "slug": "nova-collection",
-    "title": "Nova Collection",
-    "cardCategory": "Brand Campaign",
-    "meta": "Brand Campaign · Product · 2024",
-    "href": "projects/nova-collection/",
-    "cover": "projects/nova-collection/cover.jpg"
-  },
-  {
-    "slug": "vertex-plaza",
-    "title": "Vertex Plaza",
-    "cardCategory": "Commercial Tower",
-    "meta": "Commercial Tower · Animation · 2024",
-    "href": "projects/vertex-plaza/",
-    "cover": "projects/vertex-plaza/cover.jpg"
+    "slug": "YANBU LIFESTYLE",
+    "title": "YANBU LIFESTYLE",
+    "cardCategory": "Project",
+    "meta": "YANBU LIFESTYLE · Visualization · 2026",
+    "href": "projects/YANBU%20LIFESTYLE/",
+    "cover": "projects/YANBU%20LIFESTYLE/cover.webp"
   }
 ]
