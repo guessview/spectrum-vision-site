@@ -146,8 +146,7 @@ loadProjects();
     if (e.key === 'Escape') close();
   });
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  async function submitBrief() {
     msg.textContent = '';
     msg.className = 'bm-msg';
 
@@ -160,7 +159,7 @@ loadProjects();
       return;
     }
 
-    const btn = form.querySelector('button[type="submit"]');
+    const btn = sendBtn || form.querySelector('button[type="submit"]');
     if (btn) btn.disabled = true;
     if (submitText) submitText.textContent = 'Sending…';
 
@@ -185,6 +184,16 @@ loadProjects();
       if (btn) btn.disabled = false;
       if (submitText) submitText.textContent = 'Send';
     }
+  }
+
+  const sendBtn = document.getElementById('briefSend');
+  if (sendBtn) {
+    sendBtn.addEventListener('click', submitBrief);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitBrief();
   });
 })();
 
