@@ -147,42 +147,51 @@ loadProjects();
   });
 
   async function submitBrief() {
-    msg.textContent = '';
-    msg.className = 'bm-msg';
-
-    const fd = new FormData(form);
-    const payload = Object.fromEntries(fd.entries());
-
-    if (!String(payload.email || '').trim() || !String(payload.message || '').trim()) {
-      msg.textContent = 'Please fill required fields.';
-      msg.classList.add('err');
-      return;
-    }
-
-    const btn = sendBtn || form.querySelector('button[type="submit"]');
-    if (btn) btn.disabled = true;
-    if (submitText) submitText.textContent = 'Sending…';
-
     try {
-      const res = await fetch('/api/brief', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      if (!msg) return;
+      msg.textContent = 'Sending…';
+      msg.className = 'bm-msg';
 
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) throw new Error(data.error || 'Failed');
+      const fd = new FormData(form);
+      const payload = Object.fromEntries(fd.entries());
 
-      msg.textContent = 'Sent. We’ll reply soon.';
-      msg.classList.add('ok');
-      form.reset();
-      setTimeout(close, 900);
+      if (!String(payload.email || '').trim() || !String(payload.message || '').trim()) {
+        msg.textContent = 'Please fill required fields.';
+        msg.classList.add('err');
+        return;
+      }
+
+      const btn = sendBtn || form.querySelector('button[type="submit"]');
+      if (btn) btn.disabled = true;
+      if (submitText) submitText.textContent = 'Sending…';
+
+      try {
+        const res = await fetch('/api/brief', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) throw new Error(data.error || 'Failed');
+
+        msg.textContent = 'Sent. We’ll reply soon.';
+        msg.classList.add('ok');
+        form.reset();
+        setTimeout(close, 900);
+      } catch {
+        msg.textContent = 'Could not send right now. Please email us at hello@spectrumvision.ge.';
+        msg.classList.add('err');
+      } finally {
+        if (btn) btn.disabled = false;
+        if (submitText) submitText.textContent = 'Send';
+      }
     } catch {
-      msg.textContent = 'Could not send right now. Please email us at hello@spectrumvision.ge.';
-      msg.classList.add('err');
-    } finally {
-      if (btn) btn.disabled = false;
-      if (submitText) submitText.textContent = 'Send';
+      // If any unexpected JS error happens, at least show feedback.
+      if (msg) {
+        msg.textContent = 'Something went wrong. Please refresh and try again.';
+        msg.className = 'bm-msg err';
+      }
     }
   }
 
